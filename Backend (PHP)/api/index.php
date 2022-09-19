@@ -8,7 +8,7 @@ switch($_SERVER['REQUEST_METHOD']){
             echo json_encode($product->checkUniqueSKU($_GET['sku']));
         }
         else{
-        $product = new Product;
+        $product = new Product; //var_dump($product->dbGetAllProducts());
         echo json_encode($product->dbGetAllProducts());
         }
         break;
@@ -24,12 +24,14 @@ switch($_SERVER['REQUEST_METHOD']){
             echo "Missing Data";
             break;
         }
-
-        if($user_input->type == "DVD") $product = new DVD;
-        elseif($user_input->type == "Book") $product = new Book;
-        elseif($user_input->type == "Furniture") $product = new Furniture;
+    
+        if(file_exists("class/ProductTypes/$user_input->type.php"))
+        $product = new $user_input->type;
+        else {echo "Invalid Product Type"; break;}
         $product->setUserInput($user_input);
-        echo json_encode($product->dbAddProduct());
+        $CheckInput = new ProductValidating($product);
+        if($CheckInput->getResult()) echo json_encode($product->dbAddProduct());
+        else echo json_encode($CheckInput->getMessage());
         break;
 }
 ?>
