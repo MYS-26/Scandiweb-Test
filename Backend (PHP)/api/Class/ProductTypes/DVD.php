@@ -2,6 +2,8 @@
 
 class DVD extends Product implements ProductValidate{
 
+    protected $attributeName = "Size";
+    protected $attributeUnit = "MB";
 
     public function validateType(){
         if($this->type == "DVD"){

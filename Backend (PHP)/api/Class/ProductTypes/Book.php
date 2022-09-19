@@ -2,6 +2,8 @@
 
 class Book extends Product implements ProductValidate{
 
+    protected $attributeName = "Weight";
+    protected $attributeUnit = "KG"; 
 
     public function validateType(){
         if($this->type == "Book"){

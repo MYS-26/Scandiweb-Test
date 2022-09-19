@@ -2,6 +2,8 @@
 
 class Furniture extends Product implements ProductValidate{
 
+    protected $attributeName = "Dimensions";
+    protected $attributeUnit = "";
 
     public function validateType(){
         if($this->type == "Furniture"){
