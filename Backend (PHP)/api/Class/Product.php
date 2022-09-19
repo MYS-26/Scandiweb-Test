@@ -1,12 +1,15 @@
 <?php 
 
-class Product{
+class Product implements \JsonSerializable{
 
     protected $sku;
     protected $name;
     protected $price;
     protected $type;
     protected $attribute;
+
+    protected $attributeName = "";
+    protected $attributeUnit = "";
 
     public function setSKU($sku){ $this->sku = $sku; }
     public function setName($name){ $this->name = $name; }
@@ -31,9 +34,9 @@ class Product{
     public function dbGetAllProducts(){
         $db = new Database();
         $db->connect();
-        $result = $db->get()->query("SELECT * FROM products");
-        $db = null;
-        return $result->fetchAll(PDO::FETCH_ASSOC);
+        $result = $db->get()->query("SELECT type, id, sku, name, price, type, attribute FROM products");
+        $db = null; return $result->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_CLASSTYPE); 
+        //return $result->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function dbDeleteProducts($id){
@@ -94,6 +97,13 @@ class Product{
     public function validatePrice(){
         return ((strlen($this->price) > 0) && filter_var($this->price, FILTER_VALIDATE_FLOAT) 
             && floatval($this->price >= 0));
+    }
+
+    public function jsonSerialize()
+    {
+        $vars = get_object_vars($this);
+
+        return $vars;
     }
 
 
