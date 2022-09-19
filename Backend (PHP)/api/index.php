@@ -8,7 +8,7 @@ switch($_SERVER['REQUEST_METHOD']){
             echo json_encode($product->checkUniqueSKU($_GET['sku']));
         }
         else{
-        $product = new Product; //var_dump($product->dbGetAllProducts());
+        $product = new Product; 
         echo json_encode($product->dbGetAllProducts());
         }
         break;
