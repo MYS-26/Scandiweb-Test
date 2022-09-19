@@ -14,9 +14,7 @@ const ProductsList =  ({products, setDeleteList}) => {
                     {product.sku}<br/>
                     {product.name}<br/>
                     {product.price} $<br/>
-                    {product.type === "DVD" && "Size: "+ product.attribute + " MB"}
-                    {product.type === "Book" && "Weight: "+ product.attribute + " KG"}
-                    {product.type === "Furniture" && "Dimensions: "+ product.attribute}
+                    {product.attributeName}: {product.attribute} {product.attributeUnit}
                     </div>
                 </div>
             ))}

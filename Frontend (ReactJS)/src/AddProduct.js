@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 const AddProduct = () => {
 
@@ -17,6 +18,8 @@ const AddProduct = () => {
     const [dataError, setDataError] = useState([]);
     const [emptyError, setEmptyError] = useState([]);
     const [uniqueSKU, setUniqueSKU] = useState(true);
+
+    const redirect = useHistory();
 
 
     const formValidation = (e) => {
@@ -82,6 +85,7 @@ const AddProduct = () => {
             const product = {sku: sku, name: name, price: price, type: type, attribute: attribute};
             axios.post('http://localhost:80/api/product/save', product).then(function(response){
             console.log(response.data);
+            redirect.push("/")
             });
         }
        
